@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Librería Pampa</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="cabecera">
+    <h1>Librería Pampa</h1>
+    <nav class="nav-principal" aria-label="Principal">
+      <ul>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#libros">Libros</a></li>
+        <li><a href="#clientes">Clientes</a></li>
+        <li><a href="#ventas">Ventas</a></li>
+        <li><a href="#historial">Historial</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contenedor" id="contenido" tabindex="-1">
+
+    <!-- Vista: Catálogo -->
+    <section class="vista tarjeta" id="catalogo" aria-labelledby="titulo-catalogo">
+      <h2 id="titulo-catalogo">Catálogo</h2>
+      <p>Librería Pampa: libros disponibles.</p>
+      <p class="aviso-maqueta">Maqueta de Etapa 1: el buscador aún no filtra los libros.</p>
+
+      <div class="campo buscador">
+        <label class="campo-etiqueta" for="busqueda-titulo">Buscar libros por título</label>
+        <input class="campo-control" type="search" id="busqueda-titulo" name="titulo">
+      </div>
+
+      <p class="mensaje-vacio" id="mensaje-catalogo-vacio" hidden>No hay libros en el catálogo.</p>
+      <p class="mensaje-vacio" id="mensaje-catalogo-sin-resultados" hidden>No hay libros cuyo título coincida con la búsqueda.</p>
+
+      <ul class="grilla-fichas" id="lista-catalogo">
+        <li>
+          <article class="ficha">
+            <h3>Rayuela</h3>
+            <dl class="lista-datos">
+              <dt>ISBN</dt>
+              <dd>978-0-00-000001-1</dd>
+              <dt>Editorial</dt>
+              <dd>Sudamericana</dd>
+              <dt>Género</dt>
+              <dd>Novela</dd>
+              <dt>Autores</dt>
+              <dd>Julio Cortázar</dd>
+              <dt>Precio</dt>
+              <dd>$ 1.500,00</dd>
+            </dl>
+          </article>
+        </li>
+        <li>
+          <article class="ficha">
+            <h3>El Aleph</h3>
+            <dl class="lista-datos">
+              <dt>ISBN</dt>
+              <dd>978-0-00-000002-8</dd>
+              <dt>Editorial</dt>
+              <dd>Alfaguara</dd>
+              <dt>Género</dt>
+              <dd>Cuento</dd>
+              <dt>Autores</dt>
+              <dd>Jorge Luis Borges</dd>
+              <dt>Precio</dt>
+              <dd>$ 2.000,00</dd>
+            </dl>
+          </article>
+        </li>
+        <li>
+          <article class="ficha">
+            <h3>Antología fantástica</h3>
+            <dl class="lista-datos">
+              <dt>ISBN</dt>
+              <dd>978-0-00-000003-5</dd>
+              <dt>Editorial</dt>
+              <dd>Sudamericana</dd>
+              <dt>Género</dt>
+              <dd>Sin clasificar</dd>
+              <dt>Autores</dt>
+              <dd>Jorge Luis Borges, Adolfo Bioy Casares</dd>
+              <dt>Precio</dt>
+              <dd>$ 2.500,00</dd>
+            </dl>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Vista: Libros -->
+    <section class="vista tarjeta" id="libros" aria-labelledby="titulo-libros">
+      <h2 id="titulo-libros">Libros</h2>
+      <p class="aviso-maqueta">Maqueta de Etapa 1: el formulario aún no registra libros ni valida; al enviarlo la página se recarga.</p>
+
+      <form class="formulario formulario--columnas" id="form-libro">
+        <div class="campo">
+          <label class="campo-etiqueta" for="libro-titulo">Título</label>
+          <input class="campo-control" type="text" id="libro-titulo" name="titulo" required>
+        </div>
+        <div class="campo">
+          <label class="campo-etiqueta" for="libro-isbn">ISBN</label>
+          <input class="campo-control" type="text" id="libro-isbn" name="isbn" required>
+        </div>
+        <div class="campo">
+          <label class="campo-etiqueta" for="libro-precio">Precio (en pesos)</label>
+          <input class="campo-control" type="number" id="libro-precio" name="precio" min="0.01" step="0.01" required>
+        </div>
+        <div class="campo">
+          <label class="campo-etiqueta" for="libro-editorial">Editorial</label>
+          <select class="campo-control" id="libro-editorial" name="editorial" required>
+            <option value="">Seleccioná una editorial</option>
+            <option value="ed-1">Sudamericana</option>
+            <option value="ed-2">Alfaguara</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label class="campo-etiqueta" for="libro-genero">Género</label>
+          <select class="campo-control" id="libro-genero" name="genero">
+            <option value="">Sin clasificar</option>
+            <option value="gen-1">Novela</option>
+            <option value="gen-2">Cuento</option>
+          </select>
+        </div>
+        <div class="campo campo--completo">
+          <label class="campo-etiqueta" for="libro-autores">Autores</label>
+          <select class="campo-control" id="libro-autores" name="autores" multiple size="3" required aria-describedby="ayuda-libro-autores">
+            <option value="aut-1">Julio Cortázar</option>
+            <option value="aut-2">Jorge Luis Borges</option>
+            <option value="aut-3">Adolfo Bioy Casares</option>
+          </select>
+          <p class="campo-ayuda" id="ayuda-libro-autores">Para elegir más de un autor, mantené presionada la tecla Ctrl (o Cmd en Mac) y hacé clic en cada uno.</p>
+        </div>
+        <button class="btn btn--primario" type="submit">Registrar libro</button>
+      </form>
+
+      <div class="mensaje mensaje-resultado" id="mensaje-libro-resultado" role="status" aria-live="polite" hidden></div>
+
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <caption>Libros registrados</caption>
+          <thead>
+            <tr>
+              <th scope="col">Título</th>
+              <th scope="col">ISBN</th>
+              <th scope="col">Editorial</th>
+              <th scope="col">Género</th>
+              <th scope="col">Autores</th>
+              <th scope="col">Precio</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-libros-cuerpo">
+            <tr>
+              <td>Rayuela</td>
+              <td>978-0-00-000001-1</td>
+              <td>Sudamericana</td>
+              <td>Novela</td>
+              <td>Julio Cortázar</td>
+              <td>$ 1.500,00</td>
+            </tr>
+            <tr>
+              <td>El Aleph</td>
+              <td>978-0-00-000002-8</td>
+              <td>Alfaguara</td>
+              <td>Cuento</td>
+              <td>Jorge Luis Borges</td>
+              <td>$ 2.000,00</td>
+            </tr>
+            <tr>
+              <td>Antología fantástica</td>
+              <td>978-0-00-000003-5</td>
+              <td>Sudamericana</td>
+              <td>Sin clasificar</td>
+              <td>Jorge Luis Borges, Adolfo Bioy Casares</td>
+              <td>$ 2.500,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mensaje-vacio" id="mensaje-libros-vacio" hidden>Todavía no hay libros registrados.</p>
+    </section>
+
+    <!-- Vista: Clientes -->
+    <section class="vista tarjeta" id="clientes" aria-labelledby="titulo-clientes">
+      <h2 id="titulo-clientes">Clientes</h2>
+      <p class="aviso-maqueta">Maqueta de Etapa 1: el formulario aún no registra clientes ni valida; al enviarlo la página se recarga.</p>
+
+      <form class="formulario formulario--columnas" id="form-cliente">
+        <div class="campo">
+          <label class="campo-etiqueta" for="cliente-nombre">Nombre completo</label>
+          <input class="campo-control" type="text" id="cliente-nombre" name="nombreCompleto" required>
+        </div>
+        <div class="campo">
+          <label class="campo-etiqueta" for="cliente-email">Email</label>
+          <input class="campo-control" type="email" id="cliente-email" name="email" required>
+        </div>
+        <button class="btn btn--primario" type="submit">Registrar cliente</button>
+      </form>
+
+      <div class="mensaje mensaje-resultado" id="mensaje-cliente-resultado" role="status" aria-live="polite" hidden></div>
+
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <caption>Clientes registrados</caption>
+          <thead>
+            <tr>
+              <th scope="col">Nombre completo</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-clientes-cuerpo">
+            <tr>
+              <td>Ana Gómez</td>
+              <td>ana.gomez@example.com</td>
+            </tr>
+            <tr>
+              <td>Bruno Díaz</td>
+              <td>bruno.diaz@example.com</td>
+            </tr>
+            <tr>
+              <td>Carla Méndez</td>
+              <td>carla.mendez@example.com</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mensaje-vacio" id="mensaje-clientes-vacio" hidden>Todavía no hay clientes registrados.</p>
+    </section>
+
+    <!-- Vista: Ventas -->
+    <section class="vista tarjeta" id="ventas" aria-labelledby="titulo-ventas">
+      <h2 id="titulo-ventas">Ventas</h2>
+      <p class="aviso-maqueta">Maqueta de Etapa 1: agregar y quitar renglones y confirmar la venta aún no funcionan; los renglones y el total son de ejemplo.</p>
+
+      <form class="formulario" id="form-venta">
+        <div class="campo">
+          <label class="campo-etiqueta" for="venta-cliente">Cliente</label>
+          <select class="campo-control" id="venta-cliente" name="cliente">
+            <option value="">Seleccioná un cliente</option>
+            <option value="cli-1">Ana Gómez</option>
+            <option value="cli-2">Bruno Díaz</option>
+            <option value="cli-3">Carla Méndez</option>
+          </select>
+        </div>
+
+        <fieldset class="grupo-campos">
+          <legend>Agregar un libro a la venta</legend>
+          <div class="campo">
+            <label class="campo-etiqueta" for="venta-libro">Libro</label>
+            <select class="campo-control" id="venta-libro" name="libro">
+              <option value="">Seleccioná un libro</option>
+              <option value="lib-1">Rayuela</option>
+              <option value="lib-2">El Aleph</option>
+              <option value="lib-3">Antología fantástica</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label class="campo-etiqueta" for="venta-cantidad">Cantidad</label>
+            <input class="campo-control" type="number" id="venta-cantidad" name="cantidad" min="1" step="1">
+          </div>
+          <button class="btn btn--secundario" type="button" id="btn-agregar-renglon">Agregar renglón</button>
+        </fieldset>
+
+        <div class="tabla-scroll">
+          <table class="tabla">
+            <caption>Renglones de la venta</caption>
+            <thead>
+              <tr>
+                <th scope="col">Libro</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio unitario</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="venta-renglones-cuerpo">
+              <tr>
+                <td>Rayuela</td>
+                <td>2</td>
+                <td>$ 1.500,00</td>
+                <td>$ 3.000,00</td>
+                <td><button class="btn btn--peligro" type="button">Quitar Rayuela</button></td>
+              </tr>
+              <tr>
+                <td>El Aleph</td>
+                <td>1</td>
+                <td>$ 2.000,00</td>
+                <td>$ 2.000,00</td>
+                <td><button class="btn btn--peligro" type="button">Quitar El Aleph</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mensaje-vacio" id="mensaje-venta-vacia" hidden>La venta no tiene renglones. Agregá al menos un libro.</p>
+
+        <p class="resumen-total">Total de la venta: <output id="venta-total" name="total">$ 5.000,00</output></p>
+
+        <button class="btn btn--primario" type="submit">Confirmar venta</button>
+      </form>
+
+      <div class="mensaje mensaje-resultado" id="mensaje-venta-resultado" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <!-- Vista: Historial -->
+    <section class="vista tarjeta" id="historial" aria-labelledby="titulo-historial">
+      <h2 id="titulo-historial">Historial</h2>
+
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <caption>Ventas realizadas</caption>
+          <thead>
+            <tr>
+              <th scope="col">Identificador</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Total</th>
+              <th scope="col">Detalle</th>
+            </tr>
+          </thead>
+          <tbody id="historial-cuerpo">
+            <tr>
+              <td>V-0001</td>
+              <td><time datetime="2026-03-15">15/03/2026</time></td>
+              <td>Ana Gómez</td>
+              <td>$ 5.000,00</td>
+              <td><a href="#detalle-venta">Ver detalle de V-0001</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mensaje-vacio" id="mensaje-historial-vacio" hidden>Todavía no hay ventas registradas.</p>
+
+      <article class="tarjeta tarjeta--anidada" id="detalle-venta" aria-labelledby="titulo-detalle-venta">
+        <h3 id="titulo-detalle-venta">Detalle de la venta V-0001</h3>
+        <dl class="lista-datos">
+          <dt>Fecha</dt>
+          <dd><time datetime="2026-03-15">15/03/2026</time></dd>
+          <dt>Cliente</dt>
+          <dd>Ana Gómez</dd>
+        </dl>
+        <div class="tabla-scroll">
+          <table class="tabla">
+            <caption>Renglones de la venta V-0001</caption>
+            <thead>
+              <tr>
+                <th scope="col">Libro</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio unitario</th>
+                <th scope="col">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rayuela</td>
+                <td>2</td>
+                <td>$ 1.500,00</td>
+                <td>$ 3.000,00</td>
+              </tr>
+              <tr>
+                <td>El Aleph</td>
+                <td>1</td>
+                <td>$ 2.000,00</td>
+                <td>$ 2.000,00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="resumen-total">Total de la venta: <strong>$ 5.000,00</strong></p>
+      </article>
+    </section>
+
+  </main>
+</body>
+</html>
