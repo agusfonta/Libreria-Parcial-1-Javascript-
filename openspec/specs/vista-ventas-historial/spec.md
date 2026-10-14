@@ -6,7 +6,7 @@ Define la vista Ventas (selección de cliente, composición de renglones y resum
 ## Requirements
 
 ### Requirement: Selección de cliente y composición de renglones
-La vista Ventas SHALL contener un formulario (`id="form-venta"`) con un selector de cliente (`id="venta-cliente"`) con opción inicial vacía y opciones de clientes con valores `cli-N`, un selector de libro (`id="venta-libro"`) con valores `lib-N`, un campo de cantidad (`id="venta-cantidad"`, número entero, mínimo 1, paso 1) y un botón "Agregar renglón" (`id="btn-agregar-renglon"`, `type="button"`). Cada control MUST tener etiqueta asociada.
+La vista Ventas SHALL contener un formulario (`id="form-venta"`) con un selector de cliente (`id="venta-cliente"`) con opción inicial vacía y opciones de clientes con valores `cli-N`, un selector de libro (`id="venta-libro"`) con valores `lib-N`, un campo de cantidad (`id="venta-cantidad"`, número entero, mínimo 1, paso 1) y un botón "Agregar renglón" (`id="btn-agregar-renglon"`, `type="button"`). Cada control MUST tener etiqueta asociada. Sus opciones se repueblan desde los datos tras cada alta.
 
 #### Scenario: Controles de venta
 - **WHEN** se inspecciona el formulario de venta
@@ -15,6 +15,10 @@ La vista Ventas SHALL contener un formulario (`id="form-venta"`) con un selector
 #### Scenario: Agregar renglón no envía
 - **WHEN** se activa el botón "Agregar renglón" en Etapa 1
 - **THEN** el formulario no se envía ni recarga la página
+
+#### Scenario: Opciones repobladas tras un alta
+- **WHEN** se registra un libro o un cliente nuevo
+- **THEN** el selector correspondiente del formulario de venta incluye la opción del registro nuevo junto con su opción inicial vacía, sin recargar la página
 
 ### Requirement: Renglones y resumen de la venta
 La vista Ventas SHALL mostrar una tabla de renglones con encabezados libro, cantidad, precio unitario, subtotal y acciones, con cuerpo `id="venta-renglones-cuerpo"`. Cada renglón MUST mostrar libro, cantidad, precio unitario y subtotal con dos decimales, y ofrecer un botón para quitar el renglón cuyo texto identifica el libro. El total MUST mostrarse en un elemento `output` (`id="venta-total"`). El formulario MUST ofrecer un botón de envío "Confirmar venta".

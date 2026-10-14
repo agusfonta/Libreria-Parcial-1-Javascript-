@@ -29,7 +29,6 @@
     <section class="vista tarjeta" id="catalogo" aria-labelledby="titulo-catalogo">
       <h2 id="titulo-catalogo">Catálogo</h2>
       <p>Librería Pampa: libros disponibles.</p>
-      <p class="aviso-maqueta">Maqueta de Etapa 1: el buscador aún no filtra los libros.</p>
 
       <div class="campo buscador">
         <label class="campo-etiqueta" for="busqueda-titulo">Buscar libros por título</label>
@@ -39,65 +38,12 @@
       <p class="mensaje-vacio" id="mensaje-catalogo-vacio" hidden>No hay libros en el catálogo.</p>
       <p class="mensaje-vacio" id="mensaje-catalogo-sin-resultados" hidden>No hay libros cuyo título coincida con la búsqueda.</p>
 
-      <ul class="grilla-fichas" id="lista-catalogo">
-        <li>
-          <article class="ficha">
-            <h3>Rayuela</h3>
-            <dl class="lista-datos">
-              <dt>ISBN</dt>
-              <dd>978-0-00-000001-1</dd>
-              <dt>Editorial</dt>
-              <dd>Sudamericana</dd>
-              <dt>Género</dt>
-              <dd>Novela</dd>
-              <dt>Autores</dt>
-              <dd>Julio Cortázar</dd>
-              <dt>Precio</dt>
-              <dd>$ 1.500,00</dd>
-            </dl>
-          </article>
-        </li>
-        <li>
-          <article class="ficha">
-            <h3>El Aleph</h3>
-            <dl class="lista-datos">
-              <dt>ISBN</dt>
-              <dd>978-0-00-000002-8</dd>
-              <dt>Editorial</dt>
-              <dd>Alfaguara</dd>
-              <dt>Género</dt>
-              <dd>Cuento</dd>
-              <dt>Autores</dt>
-              <dd>Jorge Luis Borges</dd>
-              <dt>Precio</dt>
-              <dd>$ 2.000,00</dd>
-            </dl>
-          </article>
-        </li>
-        <li>
-          <article class="ficha">
-            <h3>Antología fantástica</h3>
-            <dl class="lista-datos">
-              <dt>ISBN</dt>
-              <dd>978-0-00-000003-5</dd>
-              <dt>Editorial</dt>
-              <dd>Sudamericana</dd>
-              <dt>Género</dt>
-              <dd>Sin clasificar</dd>
-              <dt>Autores</dt>
-              <dd>Jorge Luis Borges, Adolfo Bioy Casares</dd>
-              <dt>Precio</dt>
-              <dd>$ 2.500,00</dd>
-            </dl>
-          </article>
-        </li>
-      </ul>
+      <ul class="grilla-fichas" id="lista-catalogo"></ul>
     </section>
 
     <!-- Vista: Libros -->
     <section class="vista tarjeta" id="libros" aria-labelledby="titulo-libros">
       <h2 id="titulo-libros">Libros</h2>
-      <p class="aviso-maqueta">Maqueta de Etapa 1: el formulario aún no registra libros ni valida; al enviarlo la página se recarga.</p>
 
       <form class="formulario formulario--columnas" id="form-libro">
         <div class="campo">
@@ -128,15 +74,11 @@
             <option value="gen-2">Cuento</option>
           </select>
         </div>
-        <div class="campo campo--completo">
-          <label class="campo-etiqueta" for="libro-autores">Autores</label>
-          <select class="campo-control" id="libro-autores" name="autores" multiple size="3" required aria-describedby="ayuda-libro-autores">
-            <option value="aut-1">Julio Cortázar</option>
-            <option value="aut-2">Jorge Luis Borges</option>
-            <option value="aut-3">Adolfo Bioy Casares</option>
-          </select>
-          <p class="campo-ayuda" id="ayuda-libro-autores">Para elegir más de un autor, mantené presionada la tecla Ctrl (o Cmd en Mac) y hacé clic en cada uno.</p>
-        </div>
+        <fieldset class="campo campo--completo grupo-autores">
+          <legend>Autores</legend>
+          <div id="libro-autores" class="grupo-autores-casillas" aria-describedby="ayuda-libro-autores" aria-required="true"></div>
+          <p class="campo-ayuda" id="ayuda-libro-autores">Marcá uno o más autores.</p>
+        </fieldset>
         <button class="btn btn--primario" type="submit">Registrar libro</button>
       </form>
 
@@ -189,7 +131,6 @@
     <!-- Vista: Clientes -->
     <section class="vista tarjeta" id="clientes" aria-labelledby="titulo-clientes">
       <h2 id="titulo-clientes">Clientes</h2>
-      <p class="aviso-maqueta">Maqueta de Etapa 1: el formulario aún no registra clientes ni valida; al enviarlo la página se recarga.</p>
 
       <form class="formulario formulario--columnas" id="form-cliente">
         <div class="campo">
