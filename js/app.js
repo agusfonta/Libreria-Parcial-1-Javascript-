@@ -492,6 +492,8 @@ function inicializar() {
     return;
   }
 
+  refrescarOpcionesRelacionadas();
+
   const aplicarFiltro = () => {
     if (buscador) {
       renderizarCatalogo(filtrarPorTitulo(libros, buscador.value));

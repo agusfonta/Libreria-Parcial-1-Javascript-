@@ -60,19 +60,11 @@
         </div>
         <div class="campo">
           <label class="campo-etiqueta" for="libro-editorial">Editorial</label>
-          <select class="campo-control" id="libro-editorial" name="editorial" required>
-            <option value="">Seleccioná una editorial</option>
-            <option value="ed-1">Sudamericana</option>
-            <option value="ed-2">Alfaguara</option>
-          </select>
+          <select class="campo-control" id="libro-editorial" name="editorial" required></select>
         </div>
         <div class="campo">
           <label class="campo-etiqueta" for="libro-genero">Género</label>
-          <select class="campo-control" id="libro-genero" name="genero">
-            <option value="">Sin clasificar</option>
-            <option value="gen-1">Novela</option>
-            <option value="gen-2">Cuento</option>
-          </select>
+          <select class="campo-control" id="libro-genero" name="genero"></select>
         </div>
         <fieldset class="campo campo--completo grupo-autores">
           <legend>Autores</legend>
@@ -97,32 +89,7 @@
               <th scope="col">Precio</th>
             </tr>
           </thead>
-          <tbody id="tabla-libros-cuerpo">
-            <tr>
-              <td>Rayuela</td>
-              <td>978-0-00-000001-1</td>
-              <td>Sudamericana</td>
-              <td>Novela</td>
-              <td>Julio Cortázar</td>
-              <td>$ 1.500,00</td>
-            </tr>
-            <tr>
-              <td>El Aleph</td>
-              <td>978-0-00-000002-8</td>
-              <td>Alfaguara</td>
-              <td>Cuento</td>
-              <td>Jorge Luis Borges</td>
-              <td>$ 2.000,00</td>
-            </tr>
-            <tr>
-              <td>Antología fantástica</td>
-              <td>978-0-00-000003-5</td>
-              <td>Sudamericana</td>
-              <td>Sin clasificar</td>
-              <td>Jorge Luis Borges, Adolfo Bioy Casares</td>
-              <td>$ 2.500,00</td>
-            </tr>
-          </tbody>
+          <tbody id="tabla-libros-cuerpo"></tbody>
         </table>
       </div>
       <p class="mensaje-vacio" id="mensaje-libros-vacio" hidden>Todavía no hay libros registrados.</p>
@@ -155,20 +122,7 @@
               <th scope="col">Email</th>
             </tr>
           </thead>
-          <tbody id="tabla-clientes-cuerpo">
-            <tr>
-              <td>Ana Gómez</td>
-              <td>ana.gomez@example.com</td>
-            </tr>
-            <tr>
-              <td>Bruno Díaz</td>
-              <td>bruno.diaz@example.com</td>
-            </tr>
-            <tr>
-              <td>Carla Méndez</td>
-              <td>carla.mendez@example.com</td>
-            </tr>
-          </tbody>
+          <tbody id="tabla-clientes-cuerpo"></tbody>
         </table>
       </div>
       <p class="mensaje-vacio" id="mensaje-clientes-vacio" hidden>Todavía no hay clientes registrados.</p>
@@ -182,24 +136,14 @@
       <form class="formulario" id="form-venta">
         <div class="campo">
           <label class="campo-etiqueta" for="venta-cliente">Cliente</label>
-          <select class="campo-control" id="venta-cliente" name="cliente">
-            <option value="">Seleccioná un cliente</option>
-            <option value="cli-1">Ana Gómez</option>
-            <option value="cli-2">Bruno Díaz</option>
-            <option value="cli-3">Carla Méndez</option>
-          </select>
+          <select class="campo-control" id="venta-cliente" name="cliente"></select>
         </div>
 
         <fieldset class="grupo-campos">
           <legend>Agregar un libro a la venta</legend>
           <div class="campo">
             <label class="campo-etiqueta" for="venta-libro">Libro</label>
-            <select class="campo-control" id="venta-libro" name="libro">
-              <option value="">Seleccioná un libro</option>
-              <option value="lib-1">Rayuela</option>
-              <option value="lib-2">El Aleph</option>
-              <option value="lib-3">Antología fantástica</option>
-            </select>
+            <select class="campo-control" id="venta-libro" name="libro"></select>
           </div>
           <div class="campo">
             <label class="campo-etiqueta" for="venta-cantidad">Cantidad</label>
