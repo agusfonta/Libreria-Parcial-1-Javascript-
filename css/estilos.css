@@ -340,6 +340,15 @@ p {
   font-size: 1rem;
 }
 
+/* Campo de cantidad dentro de un renglón de la tabla de venta. */
+.campo-control--compacto {
+  width: 5.5rem;
+}
+
+.campo-control[aria-invalid="true"] {
+  border: 2px dashed var(--color-error);
+}
+
 select[multiple].campo-control {
   min-height: 0;
   height: auto;
@@ -504,6 +513,11 @@ select[multiple].campo-control {
 .mensaje-vacio::before {
   content: "ℹ ";
   content: "ℹ " / "";
+}
+
+/* Varios errores llegan separados por salto de línea: se muestran uno por renglón. */
+.mensaje-resultado {
+  white-space: pre-line;
 }
 
 .mensaje--error {

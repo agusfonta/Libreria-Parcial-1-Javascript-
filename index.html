@@ -45,7 +45,7 @@
     <section class="vista tarjeta" id="libros" aria-labelledby="titulo-libros">
       <h2 id="titulo-libros">Libros</h2>
 
-      <form class="formulario formulario--columnas" id="form-libro">
+      <form class="formulario formulario--columnas" id="form-libro" novalidate>
         <div class="campo">
           <label class="campo-etiqueta" for="libro-titulo">Título</label>
           <input class="campo-control" type="text" id="libro-titulo" name="titulo" required>
@@ -68,7 +68,7 @@
         </div>
         <fieldset class="campo campo--completo grupo-autores">
           <legend>Autores</legend>
-          <div id="libro-autores" class="grupo-autores-casillas" aria-describedby="ayuda-libro-autores" aria-required="true"></div>
+          <div id="libro-autores" class="grupo-autores-casillas" aria-describedby="ayuda-libro-autores"></div>
           <p class="campo-ayuda" id="ayuda-libro-autores">Marcá uno o más autores.</p>
         </fieldset>
         <button class="btn btn--primario" type="submit">Registrar libro</button>
@@ -76,7 +76,7 @@
 
       <div class="mensaje mensaje-resultado" id="mensaje-libro-resultado" role="status" aria-live="polite" hidden></div>
 
-      <div class="tabla-scroll">
+      <div class="tabla-scroll" tabindex="0" role="region" aria-label="Tabla de libros registrados">
         <table class="tabla">
           <caption>Libros registrados</caption>
           <thead>
@@ -99,7 +99,7 @@
     <section class="vista tarjeta" id="clientes" aria-labelledby="titulo-clientes">
       <h2 id="titulo-clientes">Clientes</h2>
 
-      <form class="formulario formulario--columnas" id="form-cliente">
+      <form class="formulario formulario--columnas" id="form-cliente" novalidate>
         <div class="campo">
           <label class="campo-etiqueta" for="cliente-nombre">Nombre completo</label>
           <input class="campo-control" type="text" id="cliente-nombre" name="nombreCompleto" required>
@@ -113,7 +113,7 @@
 
       <div class="mensaje mensaje-resultado" id="mensaje-cliente-resultado" role="status" aria-live="polite" hidden></div>
 
-      <div class="tabla-scroll">
+      <div class="tabla-scroll" tabindex="0" role="region" aria-label="Tabla de clientes registrados">
         <table class="tabla">
           <caption>Clientes registrados</caption>
           <thead>
@@ -131,9 +131,8 @@
     <!-- Vista: Ventas -->
     <section class="vista tarjeta" id="ventas" aria-labelledby="titulo-ventas">
       <h2 id="titulo-ventas">Ventas</h2>
-      <p class="aviso-maqueta">Maqueta de Etapa 1: agregar y quitar renglones y confirmar la venta aún no funcionan; los renglones y el total son de ejemplo.</p>
 
-      <form class="formulario" id="form-venta">
+      <form class="formulario" id="form-venta" novalidate>
         <div class="campo">
           <label class="campo-etiqueta" for="venta-cliente">Cliente</label>
           <select class="campo-control" id="venta-cliente" name="cliente"></select>
@@ -147,12 +146,12 @@
           </div>
           <div class="campo">
             <label class="campo-etiqueta" for="venta-cantidad">Cantidad</label>
-            <input class="campo-control" type="number" id="venta-cantidad" name="cantidad" min="1" step="1">
+            <input class="campo-control" type="number" id="venta-cantidad" name="cantidad" min="1" step="1" value="1">
           </div>
           <button class="btn btn--secundario" type="button" id="btn-agregar-renglon">Agregar renglón</button>
         </fieldset>
 
-        <div class="tabla-scroll">
+        <div class="tabla-scroll" tabindex="0" role="region" aria-label="Tabla de renglones de la venta">
           <table class="tabla">
             <caption>Renglones de la venta</caption>
             <thead>
@@ -164,27 +163,12 @@
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
-            <tbody id="venta-renglones-cuerpo">
-              <tr>
-                <td>Rayuela</td>
-                <td>2</td>
-                <td>$ 1.500,00</td>
-                <td>$ 3.000,00</td>
-                <td><button class="btn btn--peligro" type="button">Quitar Rayuela</button></td>
-              </tr>
-              <tr>
-                <td>El Aleph</td>
-                <td>1</td>
-                <td>$ 2.000,00</td>
-                <td>$ 2.000,00</td>
-                <td><button class="btn btn--peligro" type="button">Quitar El Aleph</button></td>
-              </tr>
-            </tbody>
+            <tbody id="venta-renglones-cuerpo"></tbody>
           </table>
         </div>
-        <p class="mensaje-vacio" id="mensaje-venta-vacia" hidden>La venta no tiene renglones. Agregá al menos un libro.</p>
+        <p class="mensaje-vacio" id="mensaje-venta-vacia">La venta no tiene renglones. Agregá al menos un libro.</p>
 
-        <p class="resumen-total">Total de la venta: <output id="venta-total" name="total">$ 5.000,00</output></p>
+        <p class="resumen-total">Total de la venta: <output id="venta-total" name="total">$ 0,00</output></p>
 
         <button class="btn btn--primario" type="submit">Confirmar venta</button>
       </form>
@@ -196,7 +180,7 @@
     <section class="vista tarjeta" id="historial" aria-labelledby="titulo-historial">
       <h2 id="titulo-historial">Historial</h2>
 
-      <div class="tabla-scroll">
+      <div class="tabla-scroll" tabindex="0" role="region" aria-label="Tabla de ventas realizadas">
         <table class="tabla">
           <caption>Ventas realizadas</caption>
           <thead>
@@ -208,30 +192,22 @@
               <th scope="col">Detalle</th>
             </tr>
           </thead>
-          <tbody id="historial-cuerpo">
-            <tr>
-              <td>V-0001</td>
-              <td><time datetime="2026-03-15">15/03/2026</time></td>
-              <td>Ana Gómez</td>
-              <td>$ 5.000,00</td>
-              <td><a href="#detalle-venta">Ver detalle de V-0001</a></td>
-            </tr>
-          </tbody>
+          <tbody id="historial-cuerpo"></tbody>
         </table>
       </div>
       <p class="mensaje-vacio" id="mensaje-historial-vacio" hidden>Todavía no hay ventas registradas.</p>
 
-      <article class="tarjeta tarjeta--anidada" id="detalle-venta" aria-labelledby="titulo-detalle-venta">
-        <h3 id="titulo-detalle-venta">Detalle de la venta V-0001</h3>
+      <article class="tarjeta tarjeta--anidada" id="detalle-venta" aria-labelledby="titulo-detalle-venta" hidden>
+        <h3 id="titulo-detalle-venta" tabindex="-1">Detalle de la venta</h3>
         <dl class="lista-datos">
           <dt>Fecha</dt>
-          <dd><time datetime="2026-03-15">15/03/2026</time></dd>
+          <dd><time id="detalle-venta-fecha"></time></dd>
           <dt>Cliente</dt>
-          <dd>Ana Gómez</dd>
+          <dd id="detalle-venta-cliente"></dd>
         </dl>
-        <div class="tabla-scroll">
+        <div class="tabla-scroll" tabindex="0" role="region" aria-label="Tabla de renglones del detalle de venta">
           <table class="tabla">
-            <caption>Renglones de la venta V-0001</caption>
+            <caption id="detalle-venta-caption">Renglones de la venta</caption>
             <thead>
               <tr>
                 <th scope="col">Libro</th>
@@ -240,23 +216,10 @@
                 <th scope="col">Subtotal</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Rayuela</td>
-                <td>2</td>
-                <td>$ 1.500,00</td>
-                <td>$ 3.000,00</td>
-              </tr>
-              <tr>
-                <td>El Aleph</td>
-                <td>1</td>
-                <td>$ 2.000,00</td>
-                <td>$ 2.000,00</td>
-              </tr>
-            </tbody>
+            <tbody id="detalle-venta-renglones"></tbody>
           </table>
         </div>
-        <p class="resumen-total">Total de la venta: <strong>$ 5.000,00</strong></p>
+        <p class="resumen-total">Total de la venta: <strong id="detalle-venta-total"></strong></p>
       </article>
     </section>
 

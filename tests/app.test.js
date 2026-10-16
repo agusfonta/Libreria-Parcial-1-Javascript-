@@ -360,3 +360,163 @@ test("crearLibro normaliza ISBN-10 con X", () => {
   assert.equal(resultado.isbn, "080442957x");
   assert.equal(resultado.generoId, "gen-1");
 });
+// ---------------------------------------------------------------------------
+// Ejercicio 5: venta simulada
+// ---------------------------------------------------------------------------
+
+test("cantidadValida acepta solo enteros mayores que cero", () => {
+  for (const valida of ["1", "2", 3, " 4 "]) {
+    assert.ok(app.cantidadValida(valida), `${valida} debería ser válida`);
+  }
+  for (const invalida of ["0", "-1", "1.5", "", "abc", null, 0, -2, 2.5]) {
+    assert.ok(!app.cantidadValida(invalida), `${invalida} debería ser inválida`);
+  }
+});
+
+test("subtotales y total: dos unidades a 1500 y una a 2000", () => {
+  const sub1 = app.calcularSubtotal(2, 1500);
+  const sub2 = app.calcularSubtotal(1, 2000);
+  assert.strictEqual(sub1, 3000);
+  assert.strictEqual(sub2, 2000);
+  assert.strictEqual(app.calcularTotal([{ subtotal: sub1 }, { subtotal: sub2 }]), 5000);
+  assert.strictEqual(app.formatearPrecio(5000), "$ 5.000,00");
+});
+
+test("calcularSubtotal redondea a dos decimales", () => {
+  assert.strictEqual(app.calcularSubtotal(3, 0.1), 0.3);
+});
+
+test("calcularTotalEnCurso ignora renglones con cantidad inválida", () => {
+  const renglones = [
+    { libroId: "lib-1", cantidad: "2" },
+    { libroId: "lib-2", cantidad: "0" },
+  ];
+  assert.strictEqual(app.calcularTotalEnCurso(renglones, app.libros), 3000);
+});
+
+test("validarRenglonNuevo rechaza libro faltante, inexistente, duplicado y cantidades inválidas", () => {
+  const renglones = [{ libroId: "lib-1", cantidad: "1" }];
+  assert.ok(app.validarRenglonNuevo(renglones, "", "1", app.libros).length > 0);
+  assert.ok(app.validarRenglonNuevo(renglones, "lib-999", "1", app.libros).length > 0);
+  assert.ok(app.validarRenglonNuevo(renglones, "lib-1", "1", app.libros).some((m) => /ya está/i.test(m)));
+  for (const cantidad of ["0", "-1", "1.5"]) {
+    assert.ok(app.validarRenglonNuevo(renglones, "lib-2", cantidad, app.libros).some((m) => /entero/i.test(m)));
+  }
+  assert.deepStrictEqual(app.validarRenglonNuevo(renglones, "lib-2", "3", app.libros), []);
+});
+
+test("validarVenta impide confirmar sin cliente, sin renglones o con cantidades inválidas", () => {
+  const validos = [{ libroId: "lib-1", cantidad: "2" }];
+  assert.ok(app.validarVenta("", validos, app.clientes, app.libros).some((m) => /cliente/i.test(m)));
+  assert.ok(app.validarVenta("cli-999", validos, app.clientes, app.libros).some((m) => /cliente/i.test(m)));
+  assert.ok(app.validarVenta("cli-1", [], app.clientes, app.libros).some((m) => /renglones/i.test(m)));
+  for (const cantidad of ["0", "-1", "1.5", ""]) {
+    const errores = app.validarVenta("cli-1", [{ libroId: "lib-1", cantidad }], app.clientes, app.libros);
+    assert.ok(errores.some((m) => /cantidades inválidas/i.test(m)), `cantidad ${cantidad}`);
+  }
+  assert.deepStrictEqual(app.validarVenta("cli-1", validos, app.clientes, app.libros), []);
+});
+
+test("crearVenta copia precio y datos descriptivos: no depende del catálogo posterior", () => {
+  const catalogo = [
+    { id: "lib-1", titulo: "Rayuela", isbn: "1", precio: 1500 },
+    { id: "lib-2", titulo: "El Aleph", isbn: "2", precio: 2000 },
+  ];
+  const fecha = new Date("2026-10-16T12:00:00Z");
+  const venta = app.crearVenta(
+    "cli-1",
+    [
+      { libroId: "lib-1", cantidad: "2" },
+      { libroId: "lib-2", cantidad: "1" },
+    ],
+    app.clientes,
+    catalogo,
+    [],
+    fecha
+  );
+
+  assert.strictEqual(venta.id, "ven-1");
+  assert.strictEqual(venta.fecha, "2026-10-16T12:00:00.000Z");
+  assert.strictEqual(venta.clienteNombre, "Ana Gómez");
+  assert.deepStrictEqual(venta.renglones.map((r) => r.subtotal), [3000, 2000]);
+  assert.strictEqual(venta.total, 5000);
+
+  catalogo[0].precio = 9999;
+  catalogo[0].titulo = "Cambiado";
+  assert.strictEqual(venta.renglones[0].precioUnitario, 1500);
+  assert.strictEqual(venta.renglones[0].titulo, "Rayuela");
+  assert.strictEqual(venta.total, 5000);
+});
+
+test("crearVenta genera identificadores correlativos", () => {
+  const venta = app.crearVenta(
+    "cli-2",
+    [{ libroId: "lib-1", cantidad: "1" }],
+    app.clientes,
+    app.libros,
+    [{ id: "ven-1" }, { id: "ven-2" }]
+  );
+  assert.strictEqual(venta.id, "ven-3");
+});
+
+// ---------------------------------------------------------------------------
+// Ejercicio 6: persistencia
+// ---------------------------------------------------------------------------
+
+function crearAlmacenamientoFalso(inicial = {}) {
+  const datos = new Map(Object.entries(inicial));
+  return {
+    getItem: (clave) => (datos.has(clave) ? datos.get(clave) : null),
+    setItem: (clave, valor) => datos.set(clave, String(valor)),
+    datos,
+  };
+}
+
+test("guardarColeccion y leerColeccion conservan un array", () => {
+  const almacenamiento = crearAlmacenamientoFalso();
+  assert.ok(app.guardarColeccion("x", [{ id: "a" }], almacenamiento));
+  assert.deepStrictEqual(app.leerColeccion(almacenamiento, "x"), [{ id: "a" }]);
+});
+
+test("leerColeccion devuelve null si la clave no existe o el contenido no es un array válido", () => {
+  const almacenamiento = crearAlmacenamientoFalso({ roto: "{no es json", objeto: '{"a":1}' });
+  assert.strictEqual(app.leerColeccion(almacenamiento, "inexistente"), null);
+  assert.strictEqual(app.leerColeccion(almacenamiento, "roto"), null);
+  assert.strictEqual(app.leerColeccion(almacenamiento, "objeto"), null);
+});
+
+test("guardarColeccion devuelve false si el navegador rechaza la escritura", () => {
+  const almacenamiento = {
+    setItem: () => {
+      throw new Error("QuotaExceededError");
+    },
+  };
+  assert.strictEqual(app.guardarColeccion("x", [], almacenamiento), false);
+});
+
+test("cargarDatosGuardados: primer inicio guarda ejemplos; luego recupera sin duplicar", () => {
+  const { libros, clientes, ventas, CLAVES_ALMACENAMIENTO: claves } = app;
+  const copia = { libros: libros.slice(), clientes: clientes.slice(), ventas: ventas.slice() };
+
+  try {
+    const almacenamiento = crearAlmacenamientoFalso();
+    app.cargarDatosGuardados(almacenamiento);
+    assert.strictEqual(JSON.parse(almacenamiento.datos.get(claves.libros)).length, copia.libros.length);
+    assert.strictEqual(JSON.parse(almacenamiento.datos.get(claves.ventas)).length, 0);
+
+    // Simula un alta y una venta guardadas, y una "recarga".
+    const librosGuardados = [...copia.libros, { id: "lib-7", titulo: "Nuevo" }];
+    almacenamiento.setItem(claves.libros, JSON.stringify(librosGuardados));
+    almacenamiento.setItem(claves.ventas, JSON.stringify([{ id: "ven-1" }]));
+    app.cargarDatosGuardados(almacenamiento);
+    app.cargarDatosGuardados(almacenamiento);
+
+    assert.strictEqual(libros.length, copia.libros.length + 1);
+    assert.strictEqual(new Set(libros.map((l) => l.id)).size, libros.length, "sin ids repetidos");
+    assert.strictEqual(ventas.length, 1);
+  } finally {
+    libros.splice(0, libros.length, ...copia.libros);
+    clientes.splice(0, clientes.length, ...copia.clientes);
+    ventas.splice(0, ventas.length, ...copia.ventas);
+  }
+});
